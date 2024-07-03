@@ -9,7 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "install-wasm-pack": "npm install -g wasm-pack",
+    "build-crate": "cargo build --target web"
   },
   "dependencies": {
     "@mantine/core": "^7.11.1",
