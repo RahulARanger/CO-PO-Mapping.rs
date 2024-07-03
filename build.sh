@@ -7,6 +7,8 @@ cargo build
 ls
 
 # prepare crate
+rustup target add wasm32-unknown-unknown
+rustup target add web
 pnpm build-crate
 
 ls pkg
