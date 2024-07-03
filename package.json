@@ -9,10 +9,13 @@
     "start": "next start",
     "lint": "next lint",
     "install-rust": "curl https://sh.rustup.rs -sSf | sh -s -- -y",
+    "init-rust": ". \"$HOME/.cargo/env\"",
+    "install-wasm-pack": "npm install -g wasm-pack",
+    "install-things": "pnpm install-rust && pnpm init-rust && pnpm install && pnpm install-wasm-pack",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "install-wasm-pack": "npm install -g wasm-pack",
-    "build-crate": "cargo build --target web"
+    "build-crate": "cargo build --target web",
+    "build-things": "pnpm build-crate && pnpm build"
   },
   "dependencies": {
     "@mantine/core": "^7.11.1",
