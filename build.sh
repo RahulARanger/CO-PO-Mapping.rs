@@ -3,13 +3,8 @@ source "$HOME/.cargo/env"
 
 # install packages for worker-crate and builds target files
 cargo build
-
-ls
-
 # prepare crate
-rustup target add wasm32-unknown-unknown
-rustup target add web
-pnpm build-crate
+wasm-pack build --target wasm32-unknown-unknown
 
 ls pkg
 
