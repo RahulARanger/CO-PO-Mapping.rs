@@ -9,7 +9,6 @@ import {
 	ScrollAreaAutosize,
 	Stack,
 	Text,
-	Center,
 	Button,
 } from "@mantine/core";
 import React, { ReactNode, useState } from "react";
