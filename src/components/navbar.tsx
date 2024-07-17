@@ -26,7 +26,7 @@ export const steps = [
 		),
 	},
 	{
-		name: "Confirm the Tables",
+		name: "Confirm the Tables (Coming soon)",
 		description:
 			"Please confirm the mapped tables. tables are fetched from all the worksheets in the excel file and the required tables are mapped by default. Please inspect the defaults and check if any modifications are necessary and if required configure them accordingly.",
 		references: "Please enter the number of exams",

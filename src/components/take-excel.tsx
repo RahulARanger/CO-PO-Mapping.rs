@@ -11,6 +11,7 @@ import { IconUpload, IconX, IconFileExcel } from "@tabler/icons-react";
 export default function TakeExcelFile(properties: {
 	stimulateLoading?: DropzoneProps["loading"];
 	onDrop: (file?: File) => void;
+	lock?: boolean;
 }): ReactNode {
 	const [loading, setLoading] = useState<boolean>(
 		properties.stimulateLoading ?? false
@@ -55,6 +56,7 @@ export default function TakeExcelFile(properties: {
 				accept={[MIME_TYPES.xls, MIME_TYPES.xlsx]}
 				maxFiles={1}
 				multiple={false}
+				disabled={properties.lock}
 			>
 				<Group
 					justify="center"

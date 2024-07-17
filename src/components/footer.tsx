@@ -1,9 +1,6 @@
 import {
 	AppShellFooter,
-	Button,
-	Divider,
 	Group,
-	Portal,
 	Stepper,
 	StepperStep,
 } from "@mantine/core";
@@ -27,13 +24,8 @@ export default function StepFooter(properties: {
 					style={{ flexGrow: 2 }}
 				>
 					<StepperStep label="Step 1" description={steps[0].name} />
-					<StepperStep label="Step 2" description={steps[1].name} />
+					<StepperStep label="Step 2" description={steps[1].name} disabled/>
 				</Stepper>
-				<Portal target={formId(properties.stepIndex, true)}>
-				<Button variant="light" type="submit">
-					Next
-				</Button>
-				</Portal>
 			</Group>
 		</AppShellFooter>
 	);

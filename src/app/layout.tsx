@@ -9,8 +9,8 @@ import '@mantine/core/styles.css';
 import '@mantine/dropzone/styles.css';
 
 export const metadata = {
-  title: 'My Mantine app',
-  description: 'I have followed setup instructions carefully',
+  title: 'CO-PO Mapping',
+  description: 'Website to map course outcomes to program outcomes',
 };
 
 export function Provider(properties: {children: ReactNode}): ReactNode{
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <ColorSchemeScript />
+        <ColorSchemeScript  defaultColorScheme="auto"/>
       </head>
       <body>
        <Provider>

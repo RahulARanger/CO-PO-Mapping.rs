@@ -1,3 +1,5 @@
+"use client";
+
 import {
 	AppShellMain,
 	Divider,
@@ -7,22 +9,18 @@ import {
 	ScrollAreaAutosize,
 	Stack,
 	Text,
+	Center,
+	Button,
 } from "@mantine/core";
 import React, { ReactNode, useState } from "react";
 import TakeExcelFile from "./take-excel";
 import { useForm } from "@mantine/form";
-import { formId } from "./footer";
-import init, { greet } from "../../pkg/co_po_mapping";
-
-
-async function sampleExample() {
-	await init();
-	greet("hello there");
-}
-
+import { PythonProvider, usePython } from "react-py";
 
 function Step1Form(properties: {
 	onDrop: (file?: File, numberOfExams?: number) => void;
+	lock?: boolean;
+	waitFor?: boolean;
 }): ReactNode {
 	const form = useForm({
 		mode: "uncontrolled",
@@ -50,13 +48,20 @@ function Step1Form(properties: {
 				(errors) =>
 					setErrorMessage((errors.file || errors.exams) as string)
 			)}
+			
 		>
-			<Stack justify="space-around" align="stretch">
+			<Stack
+				justify="space-around"
+				align="stretch"
+				ml="sm"
+				mt="md"
+			>
 				<TakeExcelFile
 					onDrop={(file) => form.setFieldValue("file", file)}
+					lock={properties.lock}
 				/>
 				<Divider />
-				<Group align="end" id={formId(0)}>
+				<Group align="end">
 					<InputWrapper
 						style={{ flexGrow: 1 }}
 						description={
@@ -72,15 +77,21 @@ function Step1Form(properties: {
 							key={form.key("exams")}
 							placeholder="Number of Exams"
 							min={0}
+							disabled={properties.lock}
 							max={10}
 							required={true}
 							mt="sm"
 							withAsterisk
-							{...form.getInputProps('exams')}
+							{...form.getInputProps("exams")}
 							error=""
 						/>
 					</InputWrapper>
+					<Button variant="light" type="submit" disabled={properties.lock || properties.waitFor}>
+						Next
+					</Button>
+					
 				</Group>
+				{properties.lock ? <Text fs="italic" size="sm" c="gray">Processing...</Text> : <></>}
 			</Stack>
 		</form>
 	);
@@ -93,15 +104,21 @@ export default function MainArea(properties: {
 	const index = properties.stepIndex;
 	let toShow = <></>;
 	const [uploadedFile, setUploadedFile] = useState<File | undefined>();
+	const { runPython, stdout, stderr, isLoading, isRunning } = usePython();
 
 	switch (index) {
 		case 0: {
 			toShow = (
 				<Step1Form
-					onDrop={(file, numberOfExams) => {
+					lock={isRunning}
+					waitFor={isLoading}
+					onDrop={async (file, numberOfExams) => {
 						setUploadedFile(file);
-						properties.onDrop(file?.name);
-						sampleExample();
+						// properties.onDrop(file?.name);
+						// await sampleExample();
+						runPython(
+							"import time; time.sleep(10); print('Hello');"
+						);
 					}}
 				/>
 			);
@@ -112,19 +129,17 @@ export default function MainArea(properties: {
 		}
 	}
 	return (
-		<AppShellMain>
+		<AppShellMain mt="md">
 			<ScrollAreaAutosize
 				h={
 					"calc(90vh - (var(--app-shell-header-height, 0px) + var(--app-shell-footer-height, 0px)))"
 				}
+				w={"calc(92vw - var(--app-shell-navbar-width, 0px))"}
 			>
-				<Stack
-					w={"calc(92vw - var(--app-shell-navbar-width, 0px))"}
-					justify="space-between"
-					h="100%"
-				>
+				<PythonProvider>
 					{toShow}
-				</Stack>
+					{/* {stdout} */}
+				</PythonProvider>
 			</ScrollAreaAutosize>
 		</AppShellMain>
 	);
